@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { listen } from "vscode-ws-jsonrpc";
+import {listen} from "vscode-ws-jsonrpc";
 import {
   MonacoLanguageClient,
   CloseAction,
@@ -19,7 +19,7 @@ import loader from "@monaco-editor/loader"
 
 export default {
   name: "App",
-  mounted() {
+  async mounted() {
     loader.init().then((monaco) => {
       const editorOptions = {
         theme: "vs-dark",
@@ -39,7 +39,10 @@ export default {
 
     console.log("installign editor");
 
+    await this.sleep(5000)
+
     //MonacoServices.install(monaco);
+    this.connectToMonacoServer()
 
 
   },
@@ -79,7 +82,9 @@ export default {
         onConnection: (connection) => {
           console.log("on connection");
           var languageClient = this.createLanguageClient(connection);
+          console.log("created lang client")
           var disposable = languageClient.start();
+          console.log("created disposable")
           connection.onClose(function () {
             return disposable.dispose();
           });
