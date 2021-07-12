@@ -9,9 +9,16 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "express": "^4.17.1",
     "monaco-editor": "^0.25.2",
     "monaco-editor-webpack-plugin": "^4.0.0",
-    "vue": "^2.6.11"
+    "monaco-languageclient": "^0.13.0",
+    "vscode": "^1.1.37",
+    "vscode-languageclient": "^6.1.4",
+    "vscode-languageserver": "^7.0.0",
+    "vscode-ws-jsonrpc": "^0.2.0",
+    "vue": "^2.6.11",
+    "ws": "^6.2.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
