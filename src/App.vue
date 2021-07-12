@@ -8,35 +8,40 @@
 import { listen } from "vscode-ws-jsonrpc";
 import {
   MonacoLanguageClient,
-  MonacoServices,
   CloseAction,
   ErrorAction,
   createConnection,
+  MonacoServices,
 } from "monaco-languageclient";
 
-import * as monaco from "monaco-editor";
+
+import loader from "@monaco-editor/loader"
 
 export default {
   name: "App",
   mounted() {
-    const editorOptions = {
-      theme: "vs-dark",
-      language: "python", //There can be many other options for monaco editor
-    };
-    monaco.languages.register({
-      id: "python",
-      extensions: [".py"],
-      aliases: ["python"],
-      mimetypes: ["application/text"],
-    });
+    loader.init().then((monaco) => {
+      const editorOptions = {
+        theme: "vs-dark",
+        language: "python", //There can be many other options for monaco editor
+      };
+      monaco.languages.register({
+        id: "python",
+        extensions: [".py"],
+        aliases: ["python"],
+        mimetypes: ["application/text"],
+      });
 
-    monaco.editor.create(document.getElementById("editor"), editorOptions);
+      monaco.editor.create(document.getElementById("editor"), editorOptions)
+      MonacoServices.install(monaco)
+      
+    });
 
     console.log("installign editor");
 
-    MonacoServices.install(monaco);
+    //MonacoServices.install(monaco);
 
-    //this.connectToMonacoServer();
+
   },
   created() {
     console.log("Im created");

@@ -26,7 +26,7 @@ function launch (socket) {
 wss.on('connection', function connection(ws) {
   const socket = {
     send:(content)=>ws.send(content,(error)=>{
-      if(eror){
+      if(error){
         console.log(error)
       }
     }),
