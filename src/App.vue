@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import {listen} from "vscode-ws-jsonrpc";
+import { listen } from "vscode-ws-jsonrpc";
 import {
   MonacoLanguageClient,
   CloseAction,
@@ -14,16 +14,15 @@ import {
   MonacoServices,
 } from "monaco-languageclient";
 
-
-import loader from "@monaco-editor/loader"
+import loader from "@monaco-editor/loader";
 
 export default {
   name: "App",
   async mounted() {
     loader.init().then((monaco) => {
       const editorOptions = {
-        theme: "vs-dark",
-        language: "python", //There can be many other options for monaco editor
+        language: "python", 
+        minimap: {enabled: false}
       };
       monaco.languages.register({
         id: "python",
@@ -32,19 +31,16 @@ export default {
         mimetypes: ["application/text"],
       });
 
-      monaco.editor.create(document.getElementById("editor"), editorOptions)
-      MonacoServices.install(monaco)
-      
+      monaco.editor.create(document.getElementById("editor"), editorOptions);
+      MonacoServices.install(monaco);
     });
 
     console.log("installign editor");
 
-    await this.sleep(5000)
+    await this.sleep(5000);
 
     //MonacoServices.install(monaco);
-    this.connectToMonacoServer()
-
-
+    this.connectToMonacoServer();
   },
   created() {
     console.log("Im created");
@@ -82,9 +78,9 @@ export default {
         onConnection: (connection) => {
           console.log("on connection");
           var languageClient = this.createLanguageClient(connection);
-          console.log("created lang client")
+          console.log("created lang client");
           var disposable = languageClient.start();
-          console.log("created disposable")
+          console.log("created disposable");
           connection.onClose(function () {
             return disposable.dispose();
           });
